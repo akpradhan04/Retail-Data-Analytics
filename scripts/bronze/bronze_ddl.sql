@@ -68,7 +68,7 @@ CREATE
 );
 
 CREATE 
-    OR REPLACE TABLE bronze.promotion_and_discounts (
+    OR REPLACE TABLE bronze.promotions_and_discounts (
     promotion_id                            VARCHAR(20),
     product_id                              VARCHAR(20),
     site_id                                 VARCHAR(10),
@@ -80,7 +80,7 @@ CREATE
 
 CREATE 
     OR REPLACE TABLE bronze.sales_data (
-    sales_date                              DATE,
+    sales_date                              VARCHAR,
     site_id                                 VARCHAR(10),
     product_id                              VARCHAR(20),
     units_sold                              INT,
@@ -99,6 +99,6 @@ CREATE
     city                                    VARCHAR(50),
     state                                   VARCHAR(50),
     store_size                              INT,
-    open_date                               DATE,
+    open_date                               VARCHAR,
     status                                  VARCHAR(20)
 );
