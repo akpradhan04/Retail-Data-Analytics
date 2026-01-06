@@ -19,7 +19,7 @@ WARNING:
 =============================================================
 */
 
--- Set role with sufficient privileges, use SYSADMIN to crate
+-- Set role with sufficient privileges, use SYSADMIN to create
 USE ROLE SYSADMIN;
 
 -- Set the compute warehouse to be used
