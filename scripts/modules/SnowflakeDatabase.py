@@ -1,8 +1,9 @@
 import snowflake.connector
 import os
+from Database import Database
 
 
-class SnowflakeConnection:
+class SnowflakeConnection(Database):
     def __init__(self, params: dict):
         self.params = params
         self.conn = snowflake.connector.connect(**self.params)
