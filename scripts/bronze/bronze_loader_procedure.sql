@@ -9,7 +9,7 @@ Purpose       :
     - Truncates and reloads all Bronze layer tables from staged CSV files
     - Acts as the raw ingestion layer for retail source data
 Pre-requisites:
-    - Files need to be uploaded to the file stage bronze.bronze_stage
+    - Files need to be uploaded to the file stage b
 Execution     :
     CALL bronze.load_bronze();
 ===============================================================================
@@ -166,3 +166,8 @@ EXCEPTION
         RETURN 'ERROR during Bronze load: ' || SQLERRM;
 END;
 $$;
+
+-- ----------------------------------------------------------------------------
+-- Execution Example
+-- ----------------------------------------------------------------------------
+-- CALL bronze.load_bronze();
