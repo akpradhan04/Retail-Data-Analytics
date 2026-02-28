@@ -95,7 +95,7 @@ BEGIN
         TRIM(city),
         TRIM(state),
         store_size,
-        open_date,
+        TO_DATE(open_date,'DD-MM-YYYY'),
         UPPER(TRIM(status)),
         CURRENT_TIMESTAMP(),
         CURRENT_TIMESTAMP()
@@ -182,7 +182,7 @@ BEGIN
     MERGE INTO silver.sales_data tgt
     USING (
         SELECT
-            sales_date,
+            TO_DATE(sales_date,'DD-MM-YYYY') AS sales_date,
             TRIM(site_id)      AS site_id,
             TRIM(product_id)   AS product_id,
             units_sold,
