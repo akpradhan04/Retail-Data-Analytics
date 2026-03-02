@@ -9,8 +9,10 @@ A comprehensive data analytics project for retail business performance analysis.
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Data Sources](#data-sources)
+- [Documentation](#documentation)
 - [Installation & Setup](#installation--setup)
 - [Usage](#usage)
+- [Testing](#testing)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -46,6 +48,19 @@ The project follows a **Medallion Architecture** implemented in Snowflake:
 - Star schema for efficient querying
 - Views for sales summaries, product performance, store analytics, etc.
 
+#### Architecture Diagrams
+
+The following diagrams provide visual representations of the system architecture:
+
+| Diagram | Description |
+|---------|-------------|
+| ![Architecture Diagram](docs/Architecture_Diagram.png) | High-level system architecture |
+| ![Data Layers](docs/Data_Layers.png) | Medallion architecture layers |
+| ![Entity Relationship](docs/entity_relationship_diagram.png) | ERD for gold layer tables |
+| ![Relationship Diagram](docs/relationship_diagram.png) | Table relationships and keys |
+| ![Sequence Diagram](docs/sequence_diagram.png) | Data flow sequence |
+| ![Integration Architecture](docs/Integration_architecture.png) | Azure integration architecture |
+
 ## Features
 
 - **Data Ingestion**: Automated loading of CSV datasets into Snowflake
@@ -76,6 +91,28 @@ The project includes the following datasets (located in `datasets/`):
 - `Promotions_and_Discounts.csv`: Marketing campaign data
 - `Sales_Data.csv`: Transaction-level sales data
 - `Site_Details.csv`: Store location and operational data
+
+## Documentation
+
+This project includes documentation for both business and technical stakeholders:
+
+| Document | Description |
+|----------|-------------|
+| [Business Glossary](docs/business_glossary.md) | Definitions of key terms, metrics, KPIs, and business rules used across the data warehouse |
+| [Gold Layer Data Catalog](docs/data_catalog_gold_layer.md) | Complete catalog of dimension tables, fact tables, and analytics views in the Gold layer |
+
+### Key Metrics and KPIs
+
+The project tracks the following key metrics:
+
+- **Sales Metrics**: Gross Revenue, Net Revenue, Units Sold, Average Selling Price
+- **Customer Metrics**: Lifetime Value (LTV), Purchase Frequency, Average Spend per Purchase
+- **Product Metrics**: Unit Cost, Unit Margin, Margin Percentage, Total Revenue by Product
+- **Inventory Metrics**: Beginning/Ending Inventory, Replenishment, Sell-Through Rate
+- **Logistics Metrics**: Shipment Quantity, Delivery Status, Delivered Flag
+- **Forecasting Metrics**: Forecasted Sales, Actual Sales, Sales Variance, Forecast Accuracy
+
+See [Business Glossary](docs/business_glossary.md) for complete definitions and formulas.
 
 ## Installation & Setup
 
@@ -155,7 +192,7 @@ Alternatively, the Bronze layer can be created and loaded using the provided DDL
 
 Run the DDL defined in:
 
-`adf_bronze_load.sql`
+`scripts/bronze/adf_bronze_load.sql`
 
 This script:
 
@@ -212,21 +249,54 @@ JOIN gold.dim_products dp ON fs.product_key = dp.product_key
 GROUP BY dd.year, dp.category;
 ```
 
+## Testing
+
+The project includes data quality validation through Jupyter notebooks in the `tests/` directory. These notebooks verify data integrity and completeness for each dataset:
+
+| Test File | Description |
+|-----------|-------------|
+| `tests/customer_demographics_data_check.ipynb` | Validates customer demographic data |
+| `tests/inventory_data_check.ipynb` | Validates inventory data |
+| `tests/logistics_data_check.ipynb` | Validates logistics data |
+| `tests/monthly_seasonal_planning_data_check.ipynb` | Validates seasonal planning data |
+| `tests/product_information_data_check.ipynb` | Validates product information |
+| `tests/promotions_and_discounts_data_check.ipynb` | Validates promotions data |
+| `tests/sales_data_check.ipynb` | Validates sales transaction data |
+| `tests/site_details_data_check.ipynb` | Validates store/site data |
+
+
 ## Project Structure
 
 ```
 Retail-Data-Analytics/
 ├── datasets/                    # Raw data files (CSV)
+│   ├── Customer_Demographics.csv
+│   ├── Inventory_Data.csv
+│   ├── Logistics_Data.csv
+│   ├── Monthly_Seasonal_Planning.csv
+│   ├── Product_Information.csv
+│   ├── Promotions_and_Discounts.csv
+│   ├── Sales_Data.csv
+│   └── Site_Details.csv
 ├── docs/                        # Documentation
 │   ├── ADF_Pipeline.png                  
-├── bronze/
+│   ├── Architecture_Diagram.png
+│   ├── business_glossary.md
+│   ├── data_catalog_gold_layer.md
+│   ├── Data_Layers.png
+│   ├── entity_relationship_diagram.png
+│   ├── Integration_architecture.png
+│   ├── relationship_diagram.png
+│   └── sequence_diagram.png
 ├── scripts/
 │   ├── bronze/                  # Raw data layer scripts
+│   │   ├── adf_bronze_load.sql
 │   │   ├── bronze_ddl.sql       # Bronze table definitions
 │   │   ├── bronze_loader.py     # Data ingestion script
 │   │   └── bronze_loader_procedure.sql
 │   ├── silver/                  # Cleaned data layer scripts
-│   │   └── silver_ddl.sql       # Silver table definitions
+│   │   ├── silver_ddl.sql       # Silver table definitions
+│   │   └── silver_loader_procedure.sql
 │   ├── gold/                    # Analytics layer scripts
 │   │   └── gold_ddl.sql         # Gold views and analytics
 │   ├── modules/                 # Python modules
@@ -235,8 +305,16 @@ Retail-Data-Analytics/
 │   ├── config/                  # Configuration files
 │   │   └── env.cfg              # Environment Variables
 │   ├── db_init.sql              # Database initialization
-│   ├── role_hierarchy.sql       # RBAC setup
-├── tests/                       # Test files
+│   └── role_hierarchy.sql       # RBAC setup
+├── tests/                       # Data quality test notebooks
+│   ├── customer_demographics_data_check.ipynb
+│   ├── inventory_data_check.ipynb
+│   ├── logistics_data_check.ipynb
+│   ├── monthly_seasonal_planning_data_check.ipynb
+│   ├── product_information_data_check.ipynb
+│   ├── promotions_and_discounts_data_check.ipynb
+│   ├── sales_data_check.ipynb
+│   └── site_details_data_check.ipynb
 ├── .gitignore                   # Git ignore rules
 └── README.md                    # This file
 ```
